@@ -1,0 +1,32 @@
+[package]
+name        = "sssg"
+version     = "1.1.4"
+description = "Simple Static Site Generator"
+authors     = ["Alfie John <alfie@alfie.wtf>"]
+
+documentation = "https://docs.rs/sssg/"
+homepage      = "https://crates.io/crates/sssg"
+repository    = "https://github.com/alfiedotwtf/sssg"
+readme        = "README.md"
+license       = "GPL-2.0-only"
+edition       = "2018"
+
+[[bin]]
+name  = "sssg"
+test  = false
+bench = false
+
+[dependencies]
+chrono      = "0.4.19"
+clappers    = "2.0.1"
+comrak      = "0.12.1"
+cwd         = "1.1.4"
+die         = "0.2.0"
+lazy_static = "1.4.0"
+minifier    = "0.0.43"
+minify      = "1.3.0"
+placeholder = "1.1.3"
+regex       = "1.5.5"
+tiny_http   = "0.11"
+toml        = "0.5.8"
+walkdir     = "2.3.2"
