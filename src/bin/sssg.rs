@@ -10,7 +10,7 @@ use placeholder::render;
 use regex::Regex;
 use std::collections::HashMap;
 use std::env;
-use std::fs::{read_to_string, remove_file, write};
+use std::fs::{read, read_to_string, remove_file, write};
 use tiny_http::{Response, Server, StatusCode};
 use toml::{from_str, Value};
 use walkdir::WalkDir;
@@ -134,11 +134,18 @@ fn serve_htdocs(clappers: &Clappers) {
         let error_url = url.to_string();
 
         let (message, status_code) = if url.ends_with(".sssg") {
-            (String::from("File not found"), 404)
+            (String::from("File not found").as_bytes().to_vec(), 404)
         } else {
-            match read_to_string(&format!("{}/htdocs{}", cwd(), url)) {
+            let filename = format!("{}/htdocs{}", cwd(), url);
+
+            match read(&filename) {
                 Ok(contents) => (contents, 200),
-                Err(_) => (String::from("File not found"), 404),
+                Err(err) => (
+                    format!("Error reading file '{}' ({})", filename, err)
+                        .as_bytes()
+                        .to_vec(),
+                    404,
+                ),
             }
         };
 
