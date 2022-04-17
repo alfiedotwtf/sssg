@@ -86,14 +86,16 @@ fn generate_html(contents: &str) -> Result<String, String> {
         plaintext.insert(name, markdown_to_html(&markdown, &COMRAK_OPTIONS));
     }
 
-    let template_filename = config
+    let template = config
         .get("template")
-        .ok_or("Template file not defined in 'config' section")?;
+        .ok_or("Template file not defined in 'config' section")
+        .map(|t| format!("{}/templates/{t}", cwd()))?;
 
-    let template = read_to_string(format!("{}/templates/{template_filename}", cwd())).unwrap();
+    let template_contents = read_to_string(&template)
+        .unwrap_or_else(|err| die!("Error reading template file '{}' ({})", template, err));
 
-    let output = render(&template, &plaintext)
-        .map_err(|e| format!("Template variable '{}' is missing its value", e))?;
+    let output = render(&template_contents, &plaintext)
+        .map_err(|err| format!("Template variable '{}' is missing its value", err))?;
 
     Ok(html::minify(&output))
 }
