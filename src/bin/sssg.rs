@@ -16,8 +16,12 @@ use toml::{from_str, Value};
 use walkdir::WalkDir;
 
 lazy_static! {
-    static ref COMRAK_OPTIONS: ComrakOptions = ComrakOptions::default();
     static ref SANITISE_URL: Regex = Regex::new("[.]{2}").unwrap();
+    static ref COMRAK_OPTIONS: ComrakOptions = {
+        let mut options = ComrakOptions::default();
+        options.extension.header_ids = Some(String::from(""));
+        options
+    };
 }
 
 fn main() {
