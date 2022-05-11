@@ -142,7 +142,11 @@ fn serve_htdocs(clappers: &Clappers) {
         let (message, status_code) = if url.ends_with(".sssg") {
             (String::from("File not found").as_bytes().to_vec(), 404)
         } else {
-            let filename = format!("{}/htdocs{}", cwd(), url);
+            let filename = if url.ends_with('/') {
+                format!("{}/htdocs{url}index.html", cwd())
+            } else {
+                format!("{}/htdocs{url}", cwd())
+            };
 
             match read(&filename) {
                 Ok(contents) => (contents, 200),
