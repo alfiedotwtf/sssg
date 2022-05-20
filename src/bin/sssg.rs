@@ -20,6 +20,7 @@ lazy_static! {
     static ref COMRAK_OPTIONS: ComrakOptions = {
         let mut options = ComrakOptions::default();
         options.extension.header_ids = Some(String::from(""));
+        options.render.unsafe_ = true;
         options
     };
 }
