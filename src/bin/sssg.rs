@@ -83,7 +83,7 @@ fn generate_files() {
 }
 
 fn generate_html(contents: &str) -> Result<String, String> {
-    let document = from_str(contents).map_err(|_| "TOML parse error")?;
+    let document = from_str(contents).map_err(|err| format!("TOML parse error: {}", err))?;
     let config = get_section("config", &document);
     let mut plaintext = get_section("plaintext", &document);
 
