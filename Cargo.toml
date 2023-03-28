@@ -19,7 +19,7 @@ bench = false
 [dependencies]
 chrono      = "0.4.19"
 clappers    = "2.0.1"
-comrak      = "0.12.1"
+comrak      = "0.17.0"
 cwd         = "1.1.4"
 die         = "0.2.0"
 lazy_static = "1.4.0"
